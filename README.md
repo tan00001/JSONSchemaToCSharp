@@ -8,7 +8,7 @@
 4. [License](#License)
 
 ## What is JSONSchemaToCSharp
-JSONSchemaToCSharp generate C# code from JSON schema files (https://json-schema.org/). Although Visual Studio is capable of generating C# classes from JSON data files, we still need to have a tool to generate C# code from JSON schema files.
+JSONSchemaToCSharp generates C# code from JSON schema files (https://json-schema.org/). Although Visual Studio is capable of generating C# classes from JSON data files, we still need to have a tool to generate C# code from JSON schema files.
 
 The following is part of a Walmrt API schema file:
 ```
@@ -177,7 +177,7 @@ The following is part of a Walmrt API schema file:
     }
 }
 ```
-Here is the generated code:
+Here is part of the generated code:
 ```
 /// <summary>
 /// MPItemFeed.
@@ -346,11 +346,14 @@ public struct Weight
 	public Unit Unit { get; set; }
 };
 ```
+
+This reduces the number of class definitions and structure definitions considerably, comparing to the C# code geneated from JSON data by Visual Studio.
+
 The reference of the type `Weight` would look like this
 ```
     ...
 	/// <summary>
-	/// Weight.
+	/// Minimum weight.
 	/// </summary>
 	[JsonPropertyName("minimumWeight")]
 	public Weight MinimumWeight { get; set; }
@@ -360,7 +363,7 @@ if it is defined as a value type, or
 ```
     ...
 	/// <summary>
-	/// Weight.
+	/// Minimum weight.
 	/// </summary>
 	[JsonPropertyName("minimumWeight")]
 	public Weight? MinimumWeight { get; set; }
