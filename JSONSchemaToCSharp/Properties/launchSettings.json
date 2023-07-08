@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "MPItemFeed": {
+      "commandName": "Project",
+      "commandLineArgs": "\"H:\\Projects\\Online Business Pro\\master\\External Entities\\Walmart\\JSONSchema\\MP_ITEM_SPEC_4.8.json\" \"H:\\Projects\\Online Business Pro\\master\\External Entities\\Walmart\\Models\\MPItemFeed.cs\" \"Walmart.V4_8.MPItem\" "
+    },
+    "PriceFeed": {
+      "commandName": "Project",
+      "commandLineArgs": "\"H:\\Projects\\Online Business Pro\\master\\External Entities\\Walmart\\Schema\\PriceFeed.json\" \"H:\\Projects\\Online Business Pro\\master\\External Entities\\Walmart\\Models\\PriceFeed.cs\" \"Walmart.V2.Price\" "
+    }
+  }
+}

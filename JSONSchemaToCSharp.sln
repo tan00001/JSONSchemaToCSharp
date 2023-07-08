@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSONSchemaToCSharp", "JSONSchemaToCSharp\JSONSchemaToCSharp.csproj", "{F52A4145-260D-46FF-9B6E-04F90701CA34}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F52A4145-260D-46FF-9B6E-04F90701CA34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F52A4145-260D-46FF-9B6E-04F90701CA34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F52A4145-260D-46FF-9B6E-04F90701CA34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F52A4145-260D-46FF-9B6E-04F90701CA34}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45FFA9E6-F565-426E-9288-F9EE6B677BAD}
+	EndGlobalSection
+EndGlobal
