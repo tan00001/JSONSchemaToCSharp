@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -24,6 +25,8 @@ namespace JSONSchemaToCSharp
         protected Dictionary<string, ValueDefinition> ValueDefinitions { get; set; } = new Dictionary<string, ValueDefinition>();
 
         public Dictionary<string, CommonDefinition> CommonDefinitions { get; set; }
+
+        public static IReadOnlyList<string>? UsingNamespaces { get; set; }
 
         public NamespaceDefinition(string source, string namespaceName)
         {
@@ -227,6 +230,14 @@ namespace JSONSchemaToCSharp
             sw.WriteLine("using System.ComponentModel.DataAnnotations;");
             sw.WriteLine("using System.Runtime.Serialization;");
             sw.WriteLine("using System.Text.Json.Serialization;");
+            if (UsingNamespaces != null)
+            {
+                foreach (var u in UsingNamespaces)
+                {
+                    sw.WriteLine("using " + u + ';');
+                }
+            }
+
             sw.WriteLine();
 
             sw.WriteLine("/// <summary>");

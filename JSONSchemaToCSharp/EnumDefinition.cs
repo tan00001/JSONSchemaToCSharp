@@ -14,6 +14,13 @@ namespace JSONSchemaToCSharp
 
         public IReadOnlyList<string>? EnumValueNames;
 
+        public static string? StringConverter { get; set; }
+
+        public static string? StringCollectionConverter { get; set; }
+
+
+        public bool NeedsValueConversion { get; private set; }
+
         public EnumDefinition(JsonElement.ObjectEnumerator attributes, IReadOnlyList<string> enumValues)
         {
             foreach (var attribute in attributes)
@@ -27,6 +34,8 @@ namespace JSONSchemaToCSharp
             }
 
             EnumValues = enumValues;
+
+            NeedsValueConversion = EnumValues.Any(v => v != ToDefinitionName(v));
         }
 
         public override string GetName()
@@ -50,16 +59,9 @@ namespace JSONSchemaToCSharp
         {
             var enumName = GetName();
 
-            var needsJsonConverter = EnumValues.Any(v => v != ToDefinitionName(v));
-
             sw.WriteLine("/// <summary>");
             sw.WriteLine("/// " + Title + '.');
             sw.WriteLine("/// </summary>");
-
-            if (needsJsonConverter)
-            {
-                sw.WriteLine("[JsonConverter(typeof(JsonStringEnumConverter))]");
-            }
 
             sw.WriteLine("public enum " + enumName);
             sw.WriteLine("{");
@@ -86,7 +88,7 @@ namespace JSONSchemaToCSharp
                 if (i < EnumValues.Count - 1)
                 {
                     sw.WriteLine("\t" + enumValueName + " = " + enumNumericValue++ + ',');
-                    if (needsJsonConverter)
+                    if (NeedsValueConversion)
                     {
                         sw.WriteLine();
                     }
@@ -98,6 +100,23 @@ namespace JSONSchemaToCSharp
             }
 
             sw.WriteLine("};");
+        }
+
+        internal override void WriteAttributes(StreamWriter sw, bool isArray)
+        {
+            if (isArray)
+            {
+                if (!string.IsNullOrEmpty(StringCollectionConverter))
+                {
+                    sw.WriteLine("\t[JsonConverter(typeof(" + StringCollectionConverter + "))]");
+                }
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(StringConverter))
+            {
+                sw.WriteLine("\t[JsonConverter(typeof(" + StringConverter + "))]");
+            }
         }
     }
 }

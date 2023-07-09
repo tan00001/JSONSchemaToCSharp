@@ -56,8 +56,13 @@ namespace JSONSchemaToCSharp
             return "decimal";
         }
 
-        internal override void WriteAttributes(StreamWriter sw)
+        internal override void WriteAttributes(StreamWriter sw, bool isArray)
         {
+            if (isArray)
+            {
+                return;
+            }
+
             if (Minimum != null)
             {
                 if (Maximum != null)

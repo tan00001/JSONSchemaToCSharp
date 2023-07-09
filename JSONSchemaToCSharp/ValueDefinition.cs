@@ -74,17 +74,17 @@ namespace JSONSchemaToCSharp
                 }
             }
 
-            var arrayMembers = Members.Where(m => m.IsArray).ToList();
-            if (arrayMembers.Count > 0)
+            var requiredArrayMembers = Members.Where(m => m.IsArray && m.IsRequired).ToList();
+            if (requiredArrayMembers.Count > 0)
             {
                 sw.WriteLine();
 
                 sw.WriteLine("\tpublic " + className + "()");
                 sw.WriteLine("\t{");
 
-                for (var i = 0; i < arrayMembers.Count; ++i)
+                for (var i = 0; i < requiredArrayMembers.Count; ++i)
                 {
-                    var arrayMember = arrayMembers[i];
+                    var arrayMember = requiredArrayMembers[i];
                     var memberName = ObjectDefinition.ToDefinitionName(arrayMember.Name);
                     sw.WriteLine("\t\t" + memberName + " = new();");
                 }

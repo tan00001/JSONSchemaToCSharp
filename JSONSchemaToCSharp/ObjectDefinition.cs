@@ -63,6 +63,33 @@ namespace JSONSchemaToCSharp
             return null;
         }
 
+        public static Int32? GetMaxItem(JsonElement defintion)
+        {
+            foreach (var attribute in defintion.EnumerateObject())
+            {
+                if (attribute.Name == "maxItems")
+                {
+                    return attribute.Value.GetInt32();
+                }
+            }
+
+            return null;
+        }
+
+        public static Int32? GetMinItem(JsonElement defintion)
+        {
+            foreach (var attribute in defintion.EnumerateObject())
+            {
+                if (attribute.Name == "minItems")
+                {
+                    return attribute.Value.GetInt32();
+                }
+            }
+
+            return null;
+        }
+
+
         public static string? GetTitle(JsonElement defintion)
         {
             foreach (var attribute in defintion.EnumerateObject())
@@ -174,7 +201,7 @@ namespace JSONSchemaToCSharp
             }
         }
 
-        internal virtual void WriteAttributes(StreamWriter sw)
+        internal virtual void WriteAttributes(StreamWriter sw, bool isArray)
         {
         }
 

@@ -18,6 +18,10 @@ namespace JSONSchemaToCSharp
 
         public bool IsArray { get; set; }
 
+        public Int32? MinArraySize { get; set; }
+
+        public Int32? MaxArraySize { get; set; }
+
         public bool IsRequired { get; set; }
 
         public ObjectDefinition Definition { get; set; }
@@ -57,6 +61,8 @@ namespace JSONSchemaToCSharp
                         }
                         Definition = GetDefinition(items.Value, itemType, namespaceDefinition, true);
                         IsArray = true;
+                        MaxArraySize = ObjectDefinition.GetMaxItem(property.Value);
+                        MinArraySize = ObjectDefinition.GetMinItem(property.Value);
                     }
                     break;
 
@@ -179,12 +185,23 @@ namespace JSONSchemaToCSharp
                 sw.WriteLine("\t[Required]");
             }
 
-            Definition.WriteAttributes(sw);
+            Definition.WriteAttributes(sw, IsArray);
 
             var definitionName = Definition.GetName();
             if (IsArray)
             {
-                sw.WriteLine("\tpublic List<" + definitionName + "> " + memberName + " { get; private set; }");
+                if (MaxArraySize != null)
+                {
+                    sw.WriteLine("\t[MaxLength(" + MaxArraySize.Value + ")]");
+                }
+                if (IsRequired)
+                {
+                    sw.WriteLine("\tpublic List<" + definitionName + "> " + memberName + " { get; private set; }");
+                }
+                else
+                {
+                    sw.WriteLine("\tpublic List<" + definitionName + ">? " + memberName + " { get; set; }");
+                }
             }
             else
             {

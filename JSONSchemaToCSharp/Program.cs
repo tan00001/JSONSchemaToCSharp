@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using JSONSchemaToCSharp;
 
 Console.WriteLine("JSON Schema to C# class definition. Version " + Assembly.GetExecutingAssembly().GetName().Version);
@@ -15,9 +16,11 @@ var schemaFilePath = args[0];
 
 if (!File.Exists(schemaFilePath))
 {
-    Console.WriteLine("File \"" +  schemaFilePath + "\" does not exist.");
+    Console.WriteLine("File \"" + schemaFilePath + "\" does not exist.");
     return;
 }
+
+InitiSettings();
 
 try
 {
@@ -45,3 +48,24 @@ catch (Exception ex)
     Console.WriteLine(ex.Message);
 }
 
+static void InitiSettings()
+{
+    try
+    {
+        var builder = new ConfigurationBuilder()
+            .AddJsonFile("appSettings.json", optional: false, reloadOnChange: true);
+
+        IConfiguration configuration = builder.Build();
+
+        var namespaceSection = configuration.GetSection("namespace");
+        NamespaceDefinition.UsingNamespaces = namespaceSection.GetSection("using").Get<string[]>();
+
+        var enumSection = configuration.GetSection("enum");
+        EnumDefinition.StringConverter = enumSection.GetValue<string>("stringConverter");
+        EnumDefinition.StringCollectionConverter = enumSection.GetValue<string>("stringCollectionConverter");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+}

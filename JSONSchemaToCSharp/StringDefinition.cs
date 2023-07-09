@@ -52,8 +52,13 @@ namespace JSONSchemaToCSharp
             return "string";
         }
 
-        internal override void WriteAttributes(StreamWriter sw)
+        internal override void WriteAttributes(StreamWriter sw, bool isArray)
         {
+            if (isArray)
+            {
+                return;
+            }
+
             if (MaxLength != null)
             {
                 if (MinLength != null)
